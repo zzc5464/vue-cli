@@ -12,8 +12,10 @@
   "dependencies": {
     "font-awesome": "^4.7.0",
     "font-awesome-webpack": "0.0.5-beta.2",
+    "js-cookie": "^2.2.0",
     "mint-ui": "^2.2.13",
     "normalize.css": "^7.0.0",
+    "nprogress": "^0.2.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },

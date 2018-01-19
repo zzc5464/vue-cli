@@ -9,6 +9,9 @@ import 'mint-ui/lib/style.css'
 import 'font-awesome/css/font-awesome.css';
 import 'normalize.css';
 import '@/static/css/base.css';
+
+// 路由权限验证
+import "./permission";
 Vue.config.productionTip = false
 
 new Vue({
