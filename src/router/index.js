@@ -37,7 +37,6 @@ export const commonRouter = [
     ]
   }
 ]
-// const router =  
 
 export default new Router({
     routes: commonRouter
