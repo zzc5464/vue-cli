@@ -32,6 +32,7 @@ export const commonRouter = [
     component: Index,
     children : [{
       path : 'index',
+      name:'首页',
       component : Home
     }
     ]
@@ -41,9 +42,3 @@ export const commonRouter = [
 export default new Router({
     routes: commonRouter
 });
-// router.beforeEach((to, from, next) => {
-//   console.log('to:'+to);
-//   console.log('from'+from);
-//   console.log('next'+next);
-  
-// })

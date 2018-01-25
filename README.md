@@ -84,11 +84,88 @@ export default new Router({
 <template>
   <div class="hello">
     <mt-header fixed title="我是头部">
-        <mt-button slot="left"  v-show='isShow' @click="pageBack"  icon="back">返回</mt-button>
+        <mt-button slot="left" @click="pageBack"  icon="back">返回</mt-button>
     </mt-header>
     <router-view></router-view>
   </div>
 </template>
+// fixed 表示固定在顶部  title是header的文字
+// button组件 slot表示插入到header组件中的哪个插槽  icon表示用哪个图标
+// 在头部下面展示路由
+```
+
+- 这个头部有三个最主要的功能
+  - 返回按钮
+  - 依据当前路由，如果是首页则不显示返回按钮
+  - 根据不同的路由名称title展示的名字也不一样
+
+#### 返回上一级功能实现
+
+- 核心: `this.$router.go(-1)`
+
+```js
+// 给mt-button 组件绑定点击事件
+// <mt-button slot="left" @click="pageBack"  icon="back">返回</mt-button>
+
+// 在methods中让路由跳转回上一页。  官方名称：编程式导航。
+  methods: {
+    pageBack() {
+      this.$router.go(-1);
+    }
+  }
+```
+
+#### 根据路由切换显示返回按钮
+
+- 核心 ： `v-show`  && `this.$route.path`
+
+```js
+// 给mt-button绑定v-show
+// <mt-button slot="left"  v-show='closeBack' @click="pageBack"  icon="back">返回</mt-button>
+// 在计算属性中判断当前路由
+  computed: {
+    closeBack() {
+      let hide = this.$route.path;
+      if (hide == "/home/index") { // 如果是主页则隐藏返回按钮
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+```
+
+#### 根据路由的名字展示不同的title
+
+- 核心 : `this.$route.name`
+  - 首先你要在路由表配置的时候给name值
+  - 给标签的title动态绑定title
+
+```js
+  // 登录
+  {
+    path: '/login',
+    name: 'login',  // 一定要给个name哦
+    component: Login
+  }
+```
+
+- `:` 动态绑定
+
+```html
+<mt-header fixed :title="title">给个: 动态绑定title这个变量</mt-header> 
+
+```
+
+- 绑定`this.$route.name`
+
+```js
+  data() {
+    return {
+      msg: "Welcome to my world",
+      title : this.$route.name
+    };
+  }
 ```
 
 

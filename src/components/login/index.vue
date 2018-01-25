@@ -29,7 +29,7 @@ export default {
               return false;
           }
           setToken('1');
-        //   this.$router.push({ path: '/home/index' })
+          this.$router.push({ path: '/home/index' })
       },
       btn_reset(){
           this.email = '';
