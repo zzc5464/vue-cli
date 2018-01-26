@@ -154,7 +154,6 @@ export default new Router({
 
 ```html
 <mt-header fixed :title="title">给个: 动态绑定title这个变量</mt-header> 
-
 ```
 
 - 绑定`this.$route.name`
@@ -163,10 +162,106 @@ export default new Router({
   data() {
     return {
       msg: "Welcome to my world",
-      title : this.$route.name
+      title : this.$route.name // header会根据title的值动态改变显示的文字
     };
   }
 ```
 
+###4.创建login组件
 
+- 通过mint-ui的form组件搭建
+  - `label` 输入框左侧的文字
+  - `:state=''`  校验状态，成功失败和警告，可以通过动态绑定
+  - `v-model` vue提供的双向绑定表单值 `.trim` 是去掉空格
+
+```html
+<mt-field label="邮箱" :state='vlidataUser' placeholder="请输入邮箱" type="email" v-model.trim="email"></mt-field>
+```
+
+- login页主要的功能
+  1. 跳转到主页
+  2. 判断是否有登录过的token
+  3. 校验表单
+
+#### 跳转到首页
+
+- 核心方法
+  - `this.$router.push()`
+
+```html
+<mt-button @click='btn_login' type="primary" size="large">确认登录</mt-button>
+给登录按钮绑定@click事件
+```
+
+```js
+	btn_login(){
+          this.$router.push({ path: '/home/index' })
+      }
+// 跳转到你需要的主页
+```
+
+#### 校验表单
+
+- 核心方法
+  - mint-ui提供的`:state`，他有三个值 `error, success, warning`
+
+```js
+  data(){
+      return {
+          email:'', // 通过v-model绑定输入表单的值
+          password : '',
+          vlidataUser:'', // 绑定输入表单的值
+          vlidataPwd:'',
+      }
+  },
+  methods : {
+      btn_login(){
+        // 各种表单验证都可以通过这个流程来判断成功或者失败
+          if(this.email == '') {
+              this.vlidataUser = 'error';
+              return false;
+          }
+          if(this.password == '') {
+              this.vlidataPwd = 'error';
+              return false;
+          }
+          this.vlidataUser = 'success';
+          this.vlidataPwd = 'success';
+          this.$router.push({ path: '/home/index' })
+      }
+  }
+```
+
+#### 登录成功后设置的token
+
+>设置token这类的方法，可以放到@/untils中，作为一个公共方法存在。
+>
+>在token.js中导出设置、获取、删除三种方法
+>
+>其他页面引入时，只需要:
+>
+>`import { getToken } from '@/untils/token';` 按需引入即可
+
+```js
+// @/untils/token.js
+//  模拟token
+const token = 'adminKey'; // 权限
+export function setToken(name){
+  // 这边都是模拟的，实际情况应该更复杂
+  
+    return localStorage.setItem(token,name);
+}
+
+export function getToken(){
+    return localStorage.getItem(token);
+}
+
+export function removeToken(){
+    return localStorage.setItem(token,'');
+}
+```
+
+> 设置token在实际开发中应该是点击登录成功后，通过后端返回的一个token值，将它设置到`localstorage`里面。
+
+#### token判断，如果有token直接跳转到主页
 
