@@ -39,6 +39,7 @@ demo1
 - `@` 代表`./src`路径，是通过webpack配置的
 
 ```js
+// main.js
 import Mint from 'mint-ui';
 Vue.use(Mint); 
 import 'mint-ui/lib/style.css'  // 使用mint-ui必须写的引入三连

@@ -20,6 +20,12 @@ router.beforeEach((to, from, next) => {
             next({ path: '/home/index' })
         }
     }
+    else {
+        // 无权限 切 不是在登录页的情况下跳转到login
+        if(to.path !='/login') {
+            next({ path : '/login'})
+        }
+    }
     
     
     setTimeout(() => {
@@ -28,6 +34,9 @@ router.beforeEach((to, from, next) => {
     }, 1000);
 })
 
+/* 
+    路由走完了之后进度条关闭
+*/
 router.afterEach(() => {
     NProgress.done() // finish progress bar
 })

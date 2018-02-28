@@ -14,6 +14,8 @@ export default {
   data() {
     return {
       msg: "Welcome to my world",
+      
+      // 绑定title的名字
       title : this.$route.name
     };
   },
